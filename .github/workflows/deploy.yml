@@ -1,4 +1,4 @@
-name: DemoApp CI Pipeline
+name: DemoApp CI/CD Pipeline
 
 on:
   push:
@@ -10,20 +10,35 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Checkout your code
+      # Step 1: Checkout code
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Step 2: Setup Go environment
+      # Step 2: Setup Go
       - name: Set up Go
         uses: actions/setup-go@v4
         with:
           go-version: 1.25.3
 
-      # Step 3: Build the Go app
+      # Step 3: Build Go app
       - name: Build app
         run: go build -o main .
 
-      # Step 4: Run the app for test
+      # Step 4: Test run
       - name: Test run
         run: ./main
+
+      # Step 5: Log in to DockerHub
+      - name: Login to DockerHub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      # Step 6: Build and Push Docker image
+      - name: Build and push
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/demoapp:latest
