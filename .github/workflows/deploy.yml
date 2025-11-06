@@ -1,44 +1,30 @@
-name: DemoApp CI/CD Pipeline
+name: Docker Build and Push
 
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
+  workflow_dispatch:   # Allows manual trigger
 
 jobs:
-  build:
+  build-and-push:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Checkout code
+      # ১) Checkout code
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Step 2: Setup Go
-      - name: Set up Go
-        uses: actions/setup-go@v4
-        with:
-          go-version: 1.25.3
-
-      # Step 3: Build Go app
-      - name: Build app
-        run: go build -o main .
-
-      # Step 4: Test run
-      - name: Test run
-        run: ./main
-
-      # Step 5: Log in to DockerHub
-      - name: Login to DockerHub
+      # ২) Log in to Docker Hub using GitHub Secrets
+      - name: Log in to Docker Hub
         uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      # Step 6: Build and Push Docker image
-      - name: Build and push
+      # ৩) Build and push Docker image
+      - name: Build and Push Docker image
         uses: docker/build-push-action@v4
         with:
           context: .
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}fat/demoapp:latest
+          tags: ${{ secrets.DOCKER_USERNAME }}/demoapp:latest
