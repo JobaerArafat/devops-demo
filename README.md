@@ -21,7 +21,7 @@ func main() {
 http://localhost:8080
 এখানে ব্রাউজারে "Hello, DevOps from Docker!" দেখাবে।
 
-Tip: Dockerfile এ এই HTTP server run করানোর পরে, container চালালে ব্রাউজারে দেখা যাবে।
+Dockerfile এ এই HTTP server run করানোর পরে, container চালালে ব্রাউজারে দেখা যাবে।
 
 
  এখন পুরো Go HTTP server + Docker + GitHub CI/CD → run locally in browser workflow তৈরি করব।
@@ -45,7 +45,10 @@ func main() {
     fmt.Println("Server running at http://localhost:8080")
     http.ListenAndServe(":8080", nil)
 }
-✅ এখন এটি ব্রাউজারে চলবে।
+
+এখন এটি ব্রাউজারে চলবে।
+
+
 ===============================================================================================
 Dockerfile তৈরি
 Dockerfile:
@@ -75,7 +78,11 @@ EXPOSE 8080
 
 # Run the executable
 CMD ["./main"]
+
+
 ============================================================================================
+
+
 GitHub Repository তৈরি ও push
 bash
 Copy code
@@ -85,6 +92,8 @@ git commit -m "Add Go HTTP server and Dockerfile"
 git branch -M main
 git remote add origin https://github.com/<username>/demoapp.git
 git push -u origin main
+
+
 ================================================================================================
 
 github & dockerhub authentication 
