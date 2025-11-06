@@ -1,14 +1,24 @@
-# Step 1: Use official Go image
+# Use official Go image
 FROM golang:1.25.3
 
-# Step 2: Create working directory
+# Set working directory inside container
 WORKDIR /app
 
-# Step 3: Copy all files to container
+# Copy Go module files
+COPY go.mod ./
+COPY go.sum ./
+
+# Download dependencies
+RUN go mod download
+
+# Copy source code
 COPY . .
 
-# Step 4: Build Go binary
+# Build the Go app
 RUN go build -o main .
 
-# Step 5: Run the app
+# Expose port 8080
+EXPOSE 8080
+
+# Run the executable
 CMD ["./main"]

@@ -1,7 +1,16 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"net/http"
+)
+
+func handler(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintln(w, "Hello, DevOps from Docker!")
+}
 
 func main() {
-	fmt.Println("Hello, DevOps from Docker!")
+	http.HandleFunc("/", handler)
+	fmt.Println("Server running at http://localhost:8080")
+	http.ListenAndServe(":8080", nil)
 }
