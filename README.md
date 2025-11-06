@@ -99,6 +99,7 @@ git push -u origin main
 github & dockerhub authentication 
 
 gh --version
+
 gh auth login
 
 # Docker Hub username
@@ -163,6 +164,6 @@ docker run -p 8080:8080 <your-dockerhub-username>/demoapp:latest
 http://localhost:8080
 দেখবেন: Hello, DevOps from Docker!
 
-✅ এখন পুরো workflow ready:
+এখন পুরো workflow ready:
 
 Git push → GitHub Actions → Docker Hub → Local run → Browser
