@@ -1,0 +1,29 @@
+name: DemoApp CI Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout your code
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Step 2: Setup Go environment
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: 1.25.3
+
+      # Step 3: Build the Go app
+      - name: Build app
+        run: go build -o main .
+
+      # Step 4: Run the app for test
+      - name: Test run
+        run: ./main
